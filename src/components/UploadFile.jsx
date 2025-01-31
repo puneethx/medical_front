@@ -17,7 +17,10 @@ const UploadFile = ({ onFileSelect }) => {
         setAudioUrl(URL.createObjectURL(file))
         onFileSelect(file)
       } else {
-        alert("Please select a .wav file")
+        alert("Please select a WAV file. Other audio formats are not supported.")
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""
+        }
       }
     }
   

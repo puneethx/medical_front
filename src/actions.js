@@ -1,10 +1,27 @@
 "use server"
 
 export async function uploadAudio(formData) {
-  // Simulate file processing and transcription
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  try {
+    // Create a new FormData and append the audio as 'file'
+    const apiFormData = new FormData();
+    const audioBlob = formData.get('audio');
+    apiFormData.append('file', audioBlob, 'recording.wav');
 
-  // Return a mock transcription
-  return { text: "This is a simulated transcription of the uploaded audio file." }
+    const response = await fetch('https://medify-ai-backend-1.onrender.com/single-speaker-transcribe', {
+      method: 'POST',
+      body: apiFormData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
+
+    const data = await response.json();
+    // Return only the text without any additional processing
+    return { text: data.text || '' };
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 

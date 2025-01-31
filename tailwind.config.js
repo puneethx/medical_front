@@ -1,11 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ["class"],
-    content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+    content: [
+        './pages/**/*.{js,jsx}',
+        './components/**/*.{js,jsx}',
+        './app/**/*.{js,jsx}',
+        './src/**/*.{js,jsx}',
+    ],
   theme: {
   	extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
   		colors: {}
   	}
