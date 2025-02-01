@@ -6,6 +6,7 @@ import { uploadAudio } from "./actions"
 import InputMic from "./components/InputMic"
 import UploadFile from "./components/UploadFile"
 import ReactMarkdown from 'react-markdown'
+import { Link } from 'react-router-dom'
 
 const AudioTranscription = () => {
     const [audioBlob, setAudioBlob] = useState(null)
@@ -71,7 +72,7 @@ const AudioTranscription = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 bg-[#f3f0ff] text-black font-poppins">
+        <div className="container mx-auto p-4 bg-[#f3f0ff] text-black font-poppins relative">
             <Card className="mt-10 w-full max-w-2xl mx-auto rounded-lg">
                 <CardHeader>
                     <CardTitle className="text-2xl font-600 text-center">Medify AI</CardTitle>
@@ -129,6 +130,12 @@ const AudioTranscription = () => {
                     )}
                 </CardFooter>
             </Card>
+            <Link 
+                to="/diarization" 
+                className="fixed bottom-8 right-8 bg-[#aa95d1] text-white px-6 py-3 rounded-full hover:bg-purple-300 shadow-lg transition-all duration-300 ease-in-out"
+            >
+                Try Diarization
+            </Link>
         </div>
     )
 }

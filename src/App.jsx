@@ -1,15 +1,19 @@
-import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AudioTranscription from './AudioTranscription'
+import Diarization from './components/Diarization'
 // import AudioTranscription from './page'
 
 function App() {
-
-  return (
-    <div className='font-poppins bg-[#f3f0ff] min-h-screen'>
-      <AudioTranscription/>
-    </div>
-  )
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<AudioTranscription />} />
+                <Route path="/diarization" element={<Diarization />} />
+            </Routes>
+        </Router>
+    )
 }
+
 export default App
 
 
