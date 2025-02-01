@@ -11,6 +11,7 @@ const InputMic = ({ onAudioCapture }) => {
     const mediaRecorderRef = useRef(null)
     const chunksRef = useRef([])
     const audioRef = useRef(null)
+    const streamRef = useRef(null)
 
     const convertToWav = async (blob) => {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -81,6 +82,7 @@ const InputMic = ({ onAudioCapture }) => {
     const startRecording = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+            streamRef.current = stream
             mediaRecorderRef.current = new MediaRecorder(stream)
             mediaRecorderRef.current.ondataavailable = (event) => {
                 if (event.data.size > 0) {
@@ -94,6 +96,11 @@ const InputMic = ({ onAudioCapture }) => {
                 setAudioUrl(url)
                 onAudioCapture(wavBlob)
                 chunksRef.current = []
+                
+                if (streamRef.current) {
+                    streamRef.current.getTracks().forEach(track => track.stop())
+                    streamRef.current = null
+                }
             }
             mediaRecorderRef.current.start()
             setIsRecording(true)
@@ -114,6 +121,10 @@ const InputMic = ({ onAudioCapture }) => {
     }
 
     const handleReset = () => {
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop())
+            streamRef.current = null
+        }
         setAudioUrl(null)
         onAudioCapture(null)
     }
